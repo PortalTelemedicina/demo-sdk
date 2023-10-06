@@ -1,27 +1,64 @@
-# React + TypeScript + Vite
+## Introdução
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta biblioteca fornece uma forma eficiente de coletar e gerenciar sinais vitais. Ela é projetada para ser fácil de integrar e usar em qualquer projeto que necessite de monitoramento de saúde.
 
-Currently, two official plugins are available:
+## Instalação
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+npm install @ptm-screening/portal-sdk
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```ts
+import { PortalSdk } from "@ptm-screening/portal-sdk";
+```
+
+## Interfaces
+
+### `portalTelemedicinaSDK()`
+
+#### Parâmetros
+
+- `containerId: string` - Chave de API utilizada para autenticar com a Portal Telemedicina
+- `iframeSDKUrl: string` - URL do iframe utilizado pela SDK
+- `token: string` - Token de autenticação utilizado para autenticar com a Portal Telemedicina
+
+#### Exemplo de Uso
+
+```ts
+const portalSDK = new PortalSdk({
+  containerId: "portal-sdk-container",
+  iframeSDKUrl: "https://dev.app.screening.portaltelemedicina.com.br",
+  token: token,
+});
+```
+
+### `startVitalMeasurement()`
+
+#### Parâmetros
+
+- `identifier: String` - CPF do usuário. (Obrigatório)
+- `containerId: String` - ID do contêiner onde o componente será renderizado. (Obrigatório)
+- `age: Int` - Idade do usuário em anos.
+- `height: Int` - Altura do usuário em centímetros.
+- `weight: Int` - Peso do usuário em quilogramas.
+- `gender: string` - Sexo do usuário. Valores possíveis: "male" ou "female".
+- `smoking: string` - Indica se o usuário é fumante. Valores possíveis: "0" ou "1".
+- `antihypertensive: string` - Indica se o usuário tem hipertensão. Valores possíveis: `true` ou `false`.
+- `diabetes: string` - Tipo de diabetes. Valores possíveis: "type1" ou "type2".
+- `bloodpressuremedication: string` - Indica se o usuário toma medicamentos para pressão alta. Valores possíveis: `1` ou `0`.
+
+##### Exemplos de Uso
+
+```ts
+portalSDK.startVitalMeasurement({
+  age: 30,
+  height: 180,
+  antihypertensive: "1",
+  bloodpressuremedication: "1",
+  diabetes: "type1",
+  gender: "male",
+  identifier: "123456789",
+  smoking: "0",
+  weight: 80,
+});
+```
