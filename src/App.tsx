@@ -3,18 +3,29 @@ import { Button } from "@mui/material";
 
 import { PortalSdk } from "@ptm-screening/portal-sdk";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import { getToken } from "./getToken";
 
-const portalSDK = new PortalSdk({
-  containerId: "portal-sdk-container",
-  iframeSDKUrl: "https://comforting-bublanina-d11568.netlify.app/",
-});
+let portalSDK: PortalSdk;
 
 function App() {
   useEffect(() => {
-    portalSDK.initialize();
+    getToken()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then((response: any) => {
+        portalSDK = new PortalSdk({
+          containerId: "portal-sdk-container",
+          iframeSDKUrl: import.meta.env.DEV
+            ? "http://localhost:3003"
+            : "https://comforting-bublanina-d11568.netlify.app/",
+          token: response.token,
+        });
+
+        portalSDK.initialize();
+      })
+      .catch((err) => console.error(err));
 
     return () => {
-      portalSDK.destroy();
+      portalSDK?.destroy();
     };
   }, []);
 
