@@ -16,7 +16,7 @@ function App() {
           containerId: "portal-sdk-container",
           iframeSDKUrl: import.meta.env.DEV
             ? "http://localhost:3003"
-            : "https://comforting-bublanina-d11568.netlify.app/",
+            : "https://dev.app.screening.portaltelemedicina.com.br/",
           token: response.token,
         });
 
