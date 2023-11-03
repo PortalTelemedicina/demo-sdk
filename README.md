@@ -32,6 +32,8 @@ const portalSDK = new PortalSdk({
 });
 ```
 
+# Sinais Vitais
+
 ### `startVitalMeasurement()`
 
 #### Parâmetros
@@ -61,4 +63,57 @@ portalSDK.startVitalMeasurement({
   smoking: "0",
   weight: 80,
 });
+```
+
+# Videochamada
+
+## startPatientAppointment(`email`)
+#### Parâmetros
+- `email: string` - Email do paciente (Obrigatorio)
+##### Exemplo de Uso
+```ts
+<Button
+  variant="outlined"
+  onClick={() =>
+    portalSDK.startPatientAppointment(
+      "a.garbiati+qc+p1@portaltelemedicina.com.br"
+    )
+  }
+>
+  Iniciar consulta médico
+</Button>
+```
+
+## startDoctorAppointment(`email`)
+#### Parâmetros
+- `email: string` - Email do operador (Obrigatorio)
+##### Exemplo de Uso
+```ts
+<Button
+  variant="outlined"
+  onClick={() =>
+    portalSDK.startOperatorAppointment(
+      "a.garbiati+qc+op1@portaltelemedicina.com.br"
+    )
+  }
+>
+  Iniciar consulta operador
+</Button>
+```
+
+## startOperatorAppointment(`email`)
+#### Parâmetros
+- `email: string` - Email do médico (Obrigatorio)
+##### Exemplo de Uso
+```ts
+<Button
+  variant="outlined"
+  onClick={() =>
+    portalSDK.startPatientAppointment(
+      "a.garbiati+qc+p1@portaltelemedicina.com.br"
+    )
+  }
+>
+  Iniciar consulta paciente
+</Button>
 ```
