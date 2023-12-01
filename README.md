@@ -34,9 +34,13 @@ const portalSDK = new PortalSdk({
 
 # Sinais Vitais
 
-### `startVitalMeasurement()`
+### `startVitalMeasurement(patientData, options)`
+
+Ira iniciar a medição de sinais vitais, inicialmente tenta abrir uma nova aba para a medição, caso não seja possível ira abrir na mesma aba.
 
 #### Parâmetros
+
+#### patientData
 
 - `identifier: String` - CPF do usuário. (Obrigatório)
 - `containerId: String` - ID do contêiner onde o componente será renderizado. (Obrigatório)
@@ -48,6 +52,10 @@ const portalSDK = new PortalSdk({
 - `antihypertensive: string` - Indica se o usuário tem hipertensão. Valores possíveis: `true` ou `false`.
 - `diabetes: string` - Tipo de diabetes. Valores possíveis: "type1" ou "type2".
 - `bloodpressuremedication: string` - Indica se o usuário toma medicamentos para pressão alta. Valores possíveis: `1` ou `0`.
+
+##### options (Opcional)
+
+- `timeout: Int` - Tempo limite para a medição em segundos. (Opcional)
 
 ##### Exemplos de Uso
 
@@ -65,12 +73,38 @@ portalSDK.startVitalMeasurement({
 });
 ```
 
+### `onError(callback)`
+
+#### Parâmetros
+
+- `callback: Function` - Função que será executada quando ocorrer um erro.
+
+#### Retorno
+
+- `error: {type: string}` - Objeto com informações do erro. Sendo eles:
+
+  - **MISSING_MEASUREMENT_IDENTIFIER:** O campo identificador está ausente no objeto PROFILE_DATA.
+  - **INVALID_AGE:** O valor da idade é inválido.
+  - **INVALID_WEIGHT:** O valor do peso é inválido.
+  - **INVALID_HEIGHT:** O valor da altura é inválido.
+  - **INVALID_BMI:** Os valores fornecidos para peso e altura representam um valor de IMC inválido.
+  - **MEASUREMENT_CANCELED:** A medição foi cancelada pelo usuário.
+  - **TOKEN_EXPIRED:** O token de autorização expirou.
+  - **WORKER_ERROR:** Ocorreu um erro no servidor ao processar uma carga.
+  - **MEASUREMENT_TIMED_OUT:** Se, após o envio de um fragmento ou durante a espera pelos resultados finais, nenhuma resposta for recebida da API por 60 segundos devido a problemas de rede, esse erro é retornado.
+  - **CAMERA_PERMISSION_NOT_GRANTED:** A permissão da câmera foi negada pelo usuário.
+  - **TIMELIMIT_EXCEEDED:** O tempo limite de medição foi excedido.
+
 # Videochamada
 
 ## startPatientAppointment(`email`)
+
 #### Parâmetros
+
 - `email: string` - Email do paciente (Obrigatorio)
+
 ##### Exemplo de Uso
+
 ```ts
 <Button
   variant="outlined"
@@ -85,9 +119,13 @@ portalSDK.startVitalMeasurement({
 ```
 
 ## startDoctorAppointment(`email`)
+
 #### Parâmetros
+
 - `email: string` - Email do operador (Obrigatorio)
+
 ##### Exemplo de Uso
+
 ```ts
 <Button
   variant="outlined"
@@ -102,9 +140,13 @@ portalSDK.startVitalMeasurement({
 ```
 
 ## startOperatorAppointment(`email`)
+
 #### Parâmetros
+
 - `email: string` - Email do médico (Obrigatorio)
+
 ##### Exemplo de Uso
+
 ```ts
 <Button
   variant="outlined"
