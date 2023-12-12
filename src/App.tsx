@@ -44,7 +44,6 @@ function App() {
           ? "http://localhost:3003"
           : "https://dev.app.screening.portaltelemedicina.com.br/",
         token: token.value,
-        appointmentURL: "localhost:4200",
       });
 
       portalSDK.initialize();
@@ -62,59 +61,67 @@ function App() {
   return (
     <div>
       <ResponsiveAppBar />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          padding: "4px 0",
+        }}
+      >
+        <Button
+          variant="outlined"
+          onClick={() =>
+            portalSDK?.startVitalMeasurement({
+              age: 30,
+              height: 180,
+              antihypertensive: "1",
+              bloodpressuremedication: "1",
+              diabetes: "type1",
+              gender: "male",
+              identifier: "123456789",
+              smoking: "0",
+              weight: 80,
+            })
+          }
+        >
+          Iniciar medidas vitais
+        </Button>
+
+        <Button
+          variant="outlined"
+          onClick={() =>
+            portalSDK?.startPatientAppointment(
+              "a.garbiati+qc+p1@portaltelemedicina.com.br"
+            )
+          }
+        >
+          Iniciar consulta paciente
+        </Button>
+
+        <Button
+          variant="outlined"
+          onClick={() =>
+            portalSDK?.startDoctorAppointment(
+              "a.garbiati+qc+spec2@portaltelemedicina.com.br"
+            )
+          }
+        >
+          Iniciar consulta médico
+        </Button>
+
+        <Button
+          variant="outlined"
+          onClick={() =>
+            portalSDK?.startOperatorAppointment(
+              "a.garbiati+qc+op1@portaltelemedicina.com.br"
+            )
+          }
+        >
+          Iniciar consulta operador
+        </Button>
+      </div>
       <div id="portal-sdk-container"></div>
-
-      <Button
-        variant="outlined"
-        onClick={() =>
-          portalSDK?.startVitalMeasurement({
-            age: 30,
-            height: 180,
-            antihypertensive: "1",
-            bloodpressuremedication: "1",
-            diabetes: "type1",
-            gender: "male",
-            identifier: "123456789",
-            smoking: "0",
-            weight: 80,
-          })
-        }
-      >
-        Iniciar medidas vitais
-      </Button>
-
-      <Button
-        variant="outlined"
-        onClick={() =>
-          portalSDK?.startPatientAppointment(
-            "a.garbiati+qc+p1@portaltelemedicina.com.br"
-          )
-        }
-      >
-        Iniciar consulta paciente
-      </Button>
-
-      <Button
-        variant="outlined"
-        onClick={() =>
-          portalSDK?.startDoctorAppointment(
-            "a.garbiati+qc+spec2@portaltelemedicina.com.br"
-          )
-        }
-      >
-        Iniciar consulta médico
-      </Button>
-
-      <Button
-        variant="outlined"
-        onClick={() =>
-          portalSDK?.startOperatorAppointment(
-            "a.garbiati+qc+op1@portaltelemedicina.com.br"
-          )
-        }
-      >
-        Iniciar consulta operador
-      </Button>
     </div>
   );
 }
